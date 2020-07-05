@@ -27,11 +27,7 @@ angular
       if (endpoint.Type === 3) {
         $state.go('azure.dashboard', { endpointId: endpoint.Id });
         return;
-      } else if (endpoint.Type === 4 && !endpoint.EdgeID) {
-        $state.go('portainer.endpoints.endpoint', { id: endpoint.Id });
-        return;
       }
-
       $state.go('docker.dashboard', { endpointId: endpoint.Id });
     };
 
