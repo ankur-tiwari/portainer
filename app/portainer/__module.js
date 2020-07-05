@@ -217,6 +217,9 @@ angular.module('portainer.app', []).config([
           controller: 'HomeController',
         },
       },
+      params: {
+        error: '',
+      },
     };
 
     var init = {
