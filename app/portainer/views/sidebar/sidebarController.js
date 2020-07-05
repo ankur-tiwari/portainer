@@ -1,13 +1,13 @@
 angular.module('portainer.app').controller('SidebarController', [
   '$q',
   '$scope',
-  '$state',
+  'EndpointProvider',
   '$transitions',
   'StateManager',
   'Notifications',
   'Authentication',
   'UserService',
-  function ($q, $scope, $state, $transitions, StateManager, Notifications, Authentication, UserService) {
+  function ($q, $scope, EndpointProvider, $transitions, StateManager, Notifications, Authentication, UserService) {
     function checkPermissions(memberships) {
       var isLeader = false;
       angular.forEach(memberships, function (membership) {
@@ -25,7 +25,7 @@ angular.module('portainer.app').controller('SidebarController', [
       let userDetails = Authentication.getUserDetails();
       let isAdmin = Authentication.isAdmin();
       $scope.isAdmin = isAdmin;
-      $scope.endpointId = +$state.params.endpointId;
+      $scope.endpointId = EndpointProvider.endpointID();
 
       $q.when(!isAdmin ? UserService.userMemberships(userDetails.ID) : [])
         .then(function success(data) {
@@ -36,7 +36,7 @@ angular.module('portainer.app').controller('SidebarController', [
         });
 
       $transitions.onSuccess({}, () => {
-        $scope.endpointId = +$state.params.endpointId;
+        $scope.endpointId = EndpointProvider.endpointID();
       });
     }
 
